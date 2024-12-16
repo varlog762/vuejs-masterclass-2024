@@ -2,7 +2,7 @@
 
 <template>
   <h1>Projects Page</h1>
-  <router-link :to="{ name: 'home' }">to home</router-link>
+  <router-link to="/">to home</router-link>
 </template>
 
 <style lang="scss" scoped></style>
