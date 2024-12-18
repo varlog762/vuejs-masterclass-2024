@@ -14,6 +14,7 @@
     "supabase:init": "supabase init",
     "supabase:login": "supabase login",
     "supabase:link": "dotenv -e .env -- supabase link --project-ref \"${SUPABASE_PROJECT_REF}\"",
+    "supabase:types": "supabase gen types typescript --project-id=rdpeftfiezcmhdtqfaav --schema public > src/models/supabase.ts",
     "db:migrate:new": "supabase migration new projects-schema",
     "db:reset": "supabase db reset --linked",
     "db:seed": "node --env-file=.env database/seed.js"
