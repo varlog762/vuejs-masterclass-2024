@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { h, ref } from 'vue'
+import { RouterLink } from 'vue-router'
 import type { ColumnDef } from '@tanstack/vue-table'
 
 import type { Tables } from '../../../database/types/supabase'
@@ -24,7 +25,11 @@ const columns: ColumnDef<Tables<'tasks'>>[] = [
     accessorKey: 'name',
     header: () => h('div', { class: 'text-left' }, 'Name'),
     cell: ({ row }) => {
-      return h('div', { class: 'text-left font-medium' }, row.getValue('name'))
+      return h(
+        RouterLink,
+        { to: `/tasks/${row.original.id}`, class: 'text-left font-medium hover:bg-muted' },
+        () => row.getValue('name'),
+      )
     },
   },
   {
