@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { h, ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import type { ColumnDef } from '@tanstack/vue-table'
 
