@@ -3,7 +3,6 @@ import type { ColumnDef } from '@tanstack/vue-table'
 
 import type { Tables } from '../../../database/types/supabase'
 import { supabase } from '@/lib/supabase-client'
-import DataTable from '@/components/ui/data-table/DataTable.vue'
 import { RouterLink } from 'vue-router'
 
 const projects = ref<Tables<'projects'>[] | null>(null)
