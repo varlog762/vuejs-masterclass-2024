@@ -7,7 +7,12 @@ import { supabase } from '@/lib/supabase-client'
 
 const tasks = ref<Tables<'tasks'>[] | null>(null)
 
-;(async () => {
+/**
+ * Fetches all tasks from the database.
+ *
+ * @returns {Promise<void>} Nothing when resolved, error when rejected.
+ */
+const getTasks = async () => {
   const { data, error } = await supabase.from('tasks').select()
   if (error) {
     console.error(error)
@@ -16,7 +21,9 @@ const tasks = ref<Tables<'tasks'>[] | null>(null)
   }
 
   tasks.value = data
-})()
+}
+
+await getTasks()
 
 const columns: ColumnDef<Tables<'tasks'>>[] = [
   {
