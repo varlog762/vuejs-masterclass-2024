@@ -4,7 +4,6 @@ import type { ColumnDef } from '@tanstack/vue-table'
 
 import type { Tables } from '../../../database/types/supabase'
 import { supabase } from '@/lib/supabase-client'
-import { usePageStore } from '@/stores/page'
 
 usePageStore().pageData.title = 'My Tasks'
 
