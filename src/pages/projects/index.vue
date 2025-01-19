@@ -3,11 +3,12 @@ import type { ColumnDef } from '@tanstack/vue-table'
 import { RouterLink } from 'vue-router'
 
 import type { Tables } from '../../../database/types/supabase'
+import type { Projects } from '@/utils/supaQueries'
 import { projectsQuery } from '@/utils/supaQueries'
 
 usePageStore().pageData.title = 'Projects'
 
-const projects = ref<Tables<'projects'>[] | null>(null)
+const projects = ref<Projects | null>(null)
 
 const getProjects = async () => {
   const { data, error } = await projectsQuery
@@ -20,7 +21,7 @@ const getProjects = async () => {
 
 await getProjects()
 
-const columns: ColumnDef<Tables<'projects'>>[] = [
+const columns: ColumnDef<Projects[0]>[] = [
   {
     accessorKey: 'name',
     header: () => h('div', { class: 'text-left' }, 'Name'),
