@@ -1,16 +1,21 @@
 <script setup lang="ts">
-const route = useRoute()
+import { projectQuery } from '@/utils/supaQueries'
+import type { Project } from '@/utils/supaQueries'
 
-const project = ref(null)
+const route = useRoute('/projects/[slug]')
+
+const project = ref<Project | null>(null)
 
 const getProject = async () => {
-  const { data, error } = await projectsQuery
+  const { data, error } = await projectQuery(route.params.slug)
   if (error) {
     return
   }
 
   project.value = data
 }
+
+await getProject()
 </script>
 
 <template>
