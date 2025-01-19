@@ -2,22 +2,10 @@
 import { RouterLink } from 'vue-router'
 import type { ColumnDef } from '@tanstack/vue-table'
 
-import type { QueryData } from '@supabase/supabase-js'
-import type { Tables } from '../../../database/types/supabase'
-import { supabase } from '@/lib/supabase-client'
+import type { TasksWithProject } from '@/utils/supaQueries'
+import { tasksWithProjectsQuery } from '@/utils/supaQueries'
 
 usePageStore().pageData.title = 'My Tasks'
-
-const tasksWithProjectsQuery = supabase.from('tasks').select(`
-    *,
-    projects (
-      id,
-      name,
-      slug
-    )
-  `)
-
-type TasksWithProject = QueryData<typeof tasksWithProjectsQuery>
 
 const tasks = ref<TasksWithProject | null>(null)
 /**
