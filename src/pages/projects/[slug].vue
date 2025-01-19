@@ -1,4 +1,17 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const route = useRoute()
+
+const project = ref(null)
+
+const getProject = async () => {
+  const { data, error } = await projectsQuery
+  if (error) {
+    return
+  }
+
+  project.value = data
+}
+</script>
 
 <template>
   <Table>
