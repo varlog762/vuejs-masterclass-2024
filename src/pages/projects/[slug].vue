@@ -16,6 +16,13 @@ const getProject = async () => {
 }
 
 await getProject()
+
+watch(
+  () => project.value?.name,
+  () => {
+    usePageStore().pageData.title = `Project: ${project.value?.name || ''}`
+  },
+)
 </script>
 
 <template>
