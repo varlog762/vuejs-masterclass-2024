@@ -9,7 +9,7 @@ const project = ref<Project | null>(null)
 watch(
   () => project.value?.name,
   () => {
-    usePageStore().pageData.title = `Project: ${project.value?.name || ''}`
+    usePageStore().pageData.title = `Project: ${project.value?.name ?? ''}`
   },
 )
 
