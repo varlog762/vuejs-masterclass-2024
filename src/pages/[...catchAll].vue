@@ -1,9 +1,5 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div>
-    <h1>404</h1>
-  </div>
+  <AppErrorComponent />
 </template>
-
-<style lang="scss" scoped></style>
