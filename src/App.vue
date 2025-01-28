@@ -1,10 +1,14 @@
 <script setup lang="ts">
-const { activeError } = storeToRefs(useErrorStore())
+const errorStore = useErrorStore()
+
+onErrorCaptured((error) => {
+  errorStore.setError({ error, customCode: 500 })
+})
 </script>
 
 <template>
   <AuthLayout>
-    <AppErrorComponent v-if="activeError" />
+    <AppErrorComponent v-if="errorStore.activeError" />
 
     <RouterView v-else v-slot="{ Component, route }">
       <Suspense v-if="Component" :timeout="0">

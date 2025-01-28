@@ -8,12 +8,12 @@ export const useErrorStore = defineStore('error-store', () => {
     error,
     customCode,
   }: {
-    error: string | PostgrestError
+    error: string | PostgrestError | Error
     customCode: number
   }) => {
-    if (typeof error === 'string') {
-      activeError.value = new Error(error)
-      activeError.value.customCode = customCode
+    if (typeof error === 'string' || error instanceof Error) {
+      activeError.value = typeof error === 'string' ? Error(error) : error
+      activeError.value.customCode = customCode || 500
 
       return
     }
