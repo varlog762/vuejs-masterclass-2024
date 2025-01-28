@@ -3,19 +3,39 @@ defineOptions({ name: 'AppErrorComponent' })
 
 const router = useRouter()
 
-const { activeError } = storeToRefs(useErrorStore())
+const errorStore = useErrorStore()
+
+const error = ref(errorStore.activeError)
+
+const message = ref('')
+const customCode = ref(0)
+const details = ref('')
+const code = ref('')
+const hint = ref('')
+
+if (error.value && !('code' in error.value)) {
+  message.value = error.value.message
+  customCode.value = error.value.customCode ?? 0
+}
+
+if (error.value && 'code' in error.value) {
+  message.value = error.value.message
+  details.value = error.value.details
+  code.value = error.value.code
+  hint.value = error.value.hint
+}
 
 router.afterEach(() => {
-  activeError.value = null
+  errorStore.activeError = null
 })
 </script>
 
 <template>
   <section class="error">
-    <div v-if="activeError">
+    <div>
       <iconify-icon icon="lucide:triangle-alert" class="error__icon" />
-      <h1 class="error__code">{{ activeError.customCode }}</h1>
-      <p class="error__msg">{{ activeError.message }}</p>
+      <h1 class="error__code">{{ customCode }}</h1>
+      <p class="error__msg">{{ message }}</p>
       <div class="error-footer">
         <p class="error-footer__text">You'll find lots to explore on the home page.</p>
         <RouterLink to="/">

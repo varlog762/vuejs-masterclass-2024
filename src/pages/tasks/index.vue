@@ -12,12 +12,8 @@ const tasks = ref<TasksWithProject | null>(null)
  * @returns {Promise<void>} Nothing when resolved, error when rejected.
  */
 const getTasks = async () => {
-  const { data, error } = await tasksWithProjectsQuery
-  if (error) {
-    console.error(error)
-
-    return
-  }
+  const { data, error, status } = await tasksWithProjectsQuery
+  if (error) useErrorStore().setError({ error, customCode: status })
 
   tasks.value = data
 }
