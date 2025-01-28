@@ -18,13 +18,8 @@ export const useErrorStore = defineStore('error-store', () => {
       return
     }
 
-    if (error instanceof Error) {
-      activeError.value = error
-    }
-
-    if ('statusCode' in error) {
-      ;(activeError.value as ExtendedPostgrestErrorInterface).statusCode = customCode
-    }
+    activeError.value = error
+    ;(activeError.value as ExtendedPostgrestErrorInterface).statusCode = customCode
   }
 
   return { activeError, setError }

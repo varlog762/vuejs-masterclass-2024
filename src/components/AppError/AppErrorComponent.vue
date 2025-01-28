@@ -12,6 +12,7 @@ const customCode = ref(0)
 const details = ref('')
 const code = ref('')
 const hint = ref('')
+const statusCode = ref(0)
 
 if (error.value && !('code' in error.value)) {
   message.value = error.value.message
@@ -23,6 +24,7 @@ if (error.value && 'code' in error.value) {
   details.value = error.value.details
   code.value = error.value.code
   hint.value = error.value.hint
+  statusCode.value = error.value.statusCode ?? 0
 }
 
 router.afterEach(() => {
@@ -34,8 +36,11 @@ router.afterEach(() => {
   <section class="error">
     <div>
       <iconify-icon icon="lucide:triangle-alert" class="error__icon" />
-      <h1 class="error__code">{{ customCode }}</h1>
+      <h1 class="error__code">{{ customCode || code }}</h1>
+      <p class="error__code" v-if="statusCode">Status code: {{ statusCode }}</p>
       <p class="error__msg">{{ message }}</p>
+      <p v-if="details">{{ details }}</p>
+      <p v-if="hint">{{ hint }}</p>
       <div class="error-footer">
         <p class="error-footer__text">You'll find lots to explore on the home page.</p>
         <RouterLink to="/">
