@@ -12,10 +12,10 @@ router.afterEach(() => {
 
 <template>
   <section class="error">
-    <div>
+    <div v-if="activeError">
       <iconify-icon icon="lucide:triangle-alert" class="error__icon" />
-      <h1 class="error__code">activeError.customCode</h1>
-      <p class="error__msg">activeError.message</p>
+      <h1 class="error__code">{{ activeError.customCode }}</h1>
+      <p class="error__msg">{{ activeError.message }}</p>
       <div class="error-footer">
         <p class="error-footer__text">You'll find lots to explore on the home page.</p>
         <RouterLink to="/">
