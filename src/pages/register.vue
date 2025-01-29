@@ -1,4 +1,44 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { supabase } from '@/lib/supabase-client'
+
+const router = useRouter()
+
+const formData = ref({
+  username: '',
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+})
+
+const signup = async () => {
+  const { data, error } = await supabase.auth.signUp({
+    email: formData.value.email,
+    password: formData.value.password,
+  })
+
+  if (error) {
+    useErrorStore().setError({ error, customCode: 500 })
+    return
+  }
+
+  if (data.user) {
+    const { error } = await supabase.from('profiles').insert({
+      id: data.user.id,
+      username: formData.value.username,
+      full_name: formData.value.firstName.concat(' ', formData.value.lastName),
+    })
+
+    if (error) {
+      useErrorStore().setError({ error, customCode: 500 })
+      return
+    }
+
+    router.push('/')
+  }
+}
+</script>
 
 <template>
   <div
@@ -14,34 +54,66 @@
           <Button variant="outline" class="w-full"> Register with Google </Button>
           <Separator label="Or" />
         </div>
-        <form class="grid gap-4">
+        <form class="grid gap-4" @submit.prevent="signup">
           <div class="grid gap-2">
             <Label id="username" class="text-left">Username</Label>
-            <Input id="username" type="text" placeholder="johndoe19" required />
+            <Input
+              v-model="formData.username"
+              id="username"
+              type="text"
+              placeholder="johndoe19"
+              required
+            />
           </div>
           <div class="flex flex-col sm:flex-row justify-between gap-4">
             <div class="grid gap-2">
               <Label id="first_name" class="text-left">First Name</Label>
-              <Input id="first_name" type="text" placeholder="John" required />
+              <Input
+                v-model="formData.firstName"
+                id="first_name"
+                type="text"
+                placeholder="John"
+                required
+              />
             </div>
             <div class="grid gap-2">
               <Label id="last_name" class="text-left">Last Name</Label>
-              <Input id="last_name" type="text" placeholder="Doe" required />
+              <Input
+                v-model="formData.lastName"
+                id="last_name"
+                type="text"
+                placeholder="Doe"
+                required
+              />
             </div>
           </div>
           <div class="grid gap-2">
             <Label id="email" class="text-left">Email</Label>
-            <Input id="email" type="email" placeholder="johndoe19@example.com" required />
+            <Input
+              v-model="formData.email"
+              id="email"
+              type="email"
+              placeholder="johndoe19@example.com"
+              required
+            />
           </div>
 
           <div class="grid gap-2">
             <Label id="password" class="text-left">Password</Label>
-            <Input id="password" type="password" placeholder="*****" autocomplete required />
+            <Input
+              v-model="formData.password"
+              id="password"
+              type="password"
+              placeholder="*****"
+              autocomplete
+              required
+            />
           </div>
 
           <div class="grid gap-2">
             <Label id="confirm_password" class="text-left">Confirm Password</Label>
             <Input
+              v-model="formData.confirmPassword"
               id="confirm_password"
               type="password"
               placeholder="*****"
