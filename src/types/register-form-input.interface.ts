@@ -1,8 +1,8 @@
-export interface RegisterFormInputInterface {
+import type { LoginFormInputInterface } from './login-form-input.interface'
+
+export interface RegisterFormInputInterface extends LoginFormInputInterface {
   username: string
   firstName: string
   lastName: string
-  email: string
-  password: string
   confirmPassword: string
 }
