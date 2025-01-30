@@ -13,7 +13,9 @@ const formData = ref({
 })
 
 const signup = async () => {
-  register(formData.value)
+  const isRegistered = await register(formData.value)
+
+  if (isRegistered) router.push('/')
 }
 </script>
 

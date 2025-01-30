@@ -1,5 +1,5 @@
 import { supabase } from '@/lib/supabase-client'
-import type { RegisterFormInputInterface } from '@/types'
+import type { LoginFormInputInterface, RegisterFormInputInterface } from '@/types'
 
 export const register = async (formData: RegisterFormInputInterface) => {
   const { data, error } = await supabase.auth.signUp({
@@ -23,7 +23,20 @@ export const register = async (formData: RegisterFormInputInterface) => {
       console.log(error)
       return
     }
-
-    router.push('/')
   }
+
+  return true
+}
+
+export const login = async (formData: LoginFormInputInterface) => {
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: formData.email,
+    password: formData.password,
+  })
+
+  if (error) {
+    console.log(error)
+    return
+  }
+  return true
 }
