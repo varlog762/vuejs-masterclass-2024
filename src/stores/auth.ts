@@ -14,5 +14,15 @@ export const useAuthStore = defineStore('auth-store', () => {
     user.value = userSession.user
   }
 
+  const setProfile = () => {
+    if (!user.value) {
+      profile.value = null
+      return
+    }
+
+    if (!profile.value || profile.value.id !== user.value.id) {
+    }
+  }
+
   return { user, profile, setAuth }
 })
