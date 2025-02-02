@@ -1,6 +1,8 @@
 import { supabase } from '@/lib/supabase-client'
 import type { LoginFormInputInterface, RegisterFormInputInterface } from '@/types'
 
+const authStore = useAuthStore()
+
 export const register = async (formData: RegisterFormInputInterface) => {
   const { data, error } = await supabase.auth.signUp({
     email: formData.email,
@@ -25,6 +27,8 @@ export const register = async (formData: RegisterFormInputInterface) => {
     }
   }
 
+  authStore.setAuth(data.session)
+
   return true
 }
 
@@ -38,5 +42,8 @@ export const login = async (formData: LoginFormInputInterface) => {
     console.log(error)
     return
   }
+
+  authStore.setAuth(data.session)
+
   return true
 }
