@@ -1,14 +1,11 @@
 <script setup lang="ts">
 const errorStore = useErrorStore()
-const authStore = useAuthStore()
 
 onErrorCaptured((error) => {
   errorStore.setError({ error, customCode: 500 })
 })
 
-onMounted(async () => {
-  await authStore.getSession()
-})
+onMounted(async () => {})
 </script>
 
 <template>
