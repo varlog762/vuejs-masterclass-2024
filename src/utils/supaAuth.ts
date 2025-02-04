@@ -1,8 +1,6 @@
 import { supabase } from '@/lib/supabase-client'
 import type { LoginFormInputInterface, RegisterFormInputInterface } from '@/types'
 
-const authStore = useAuthStore()
-
 /**
  * Registers a user with Supabase, using the provided credentials.
  *
@@ -34,8 +32,6 @@ export const register = async (formData: RegisterFormInputInterface) => {
     }
   }
 
-  await authStore.setAuth(data.session)
-
   return true
 }
 
@@ -57,8 +53,6 @@ export const login = async (formData: LoginFormInputInterface) => {
     return
   }
 
-  await authStore.setAuth(data.session)
-
   return true
 }
 
@@ -74,8 +68,6 @@ export const logout = async () => {
     console.log(error)
     return
   }
-
-  await authStore.setAuth()
 
   return true
 }
