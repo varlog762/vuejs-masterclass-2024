@@ -3,6 +3,13 @@ import type { LoginFormInputInterface, RegisterFormInputInterface } from '@/type
 
 const authStore = useAuthStore()
 
+/**
+ * Registers a user with Supabase, using the provided credentials.
+ *
+ * @param {RegisterFormInputInterface} formData - The credentials, including email, password, username, first name, and last name.
+ *
+ * @returns {Promise<boolean>} - `true` if the user was successfully registered.
+ */
 export const register = async (formData: RegisterFormInputInterface) => {
   const { data, error } = await supabase.auth.signUp({
     email: formData.email,
@@ -32,6 +39,13 @@ export const register = async (formData: RegisterFormInputInterface) => {
   return true
 }
 
+/**
+ * Logs the user into Supabase using the provided login credentials.
+ *
+ * @param {LoginFormInputInterface} formData - The login credentials, including email and password.
+ *
+ * @returns {Promise<boolean>} - `true` if the user was successfully logged in.
+ */
 export const login = async (formData: LoginFormInputInterface) => {
   const { data, error } = await supabase.auth.signInWithPassword({
     email: formData.email,
@@ -48,6 +62,11 @@ export const login = async (formData: LoginFormInputInterface) => {
   return true
 }
 
+/**
+ * Logs the user out of Supabase and resets the auth store.
+ *
+ * @returns {Promise<boolean>} - `true` if the user was successfully logged out.
+ */
 export const logout = async () => {
   const { error } = await supabase.auth.signOut()
 
