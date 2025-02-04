@@ -36,24 +36,19 @@ export const register = async (formData: RegisterFormInputInterface) => {
 }
 
 /**
- * Logs the user into Supabase using the provided login credentials.
+ * Logs a user in with Supabase, using the provided email and password.
  *
  * @param {LoginFormInputInterface} formData - The login credentials, including email and password.
  *
- * @returns {Promise<boolean>} - `true` if the user was successfully logged in.
+ * @returns {Promise<{ error: AuthError | null }>} - The error from Supabase if the login failed, or null if it succeeded.
  */
 export const login = async (formData: LoginFormInputInterface) => {
-  const { data, error } = await supabase.auth.signInWithPassword({
+  const { error } = await supabase.auth.signInWithPassword({
     email: formData.email,
     password: formData.password,
   })
 
-  if (error) {
-    console.log(error)
-    return
-  }
-
-  return true
+  return { error } // Returns AuthError | null
 }
 
 /**

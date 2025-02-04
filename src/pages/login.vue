@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { login } from '@/utils/supaAuth'
 
+const _error = ref<string>('')
+
 const router = useRouter()
 
 const formData = ref({
@@ -9,9 +11,11 @@ const formData = ref({
 })
 
 const signin = async () => {
-  const isLoggedIn = await login(formData.value)
+  const { error } = await login(formData.value)
 
-  if (isLoggedIn) router.push('/')
+  if (!error) return router.push('/')
+
+  _error.value = error.message
 }
 </script>
 
@@ -36,6 +40,7 @@ const signin = async () => {
               type="email"
               placeholder="johndoe19@example.com"
               required
+              :class="{ 'border-red-500': _error }"
             />
           </div>
           <div class="grid gap-2">
@@ -49,8 +54,12 @@ const signin = async () => {
               type="password"
               autocomplete
               required
+              :class="{ 'border-red-500': _error }"
             />
           </div>
+          <ul class="text-sm text-left text-red-500" v-if="_error">
+            <li class="list-disc">{{ _error }}</li>
+          </ul>
           <Button type="submit" class="w-full"> Login </Button>
         </form>
         <div class="mt-4 text-sm text-center">
