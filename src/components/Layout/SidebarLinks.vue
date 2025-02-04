@@ -4,6 +4,14 @@ import type { LinksProps } from '@/types'
 defineProps<{
   links: LinksProps[]
 }>()
+
+const emit = defineEmits<{
+  actionClicked: [string]
+}>()
+
+const emitAction = (payload: string) => {
+  emit('actionClicked', payload)
+}
 </script>
 
 <template>
@@ -18,7 +26,7 @@ defineProps<{
       <span class="hidden lg:block text-nowrap">{{ link.title }}</span>
     </RouterLink>
 
-    <div v-else class="nav-link cursor-pointer">
+    <div v-else class="nav-link cursor-pointer" @click="emitAction(link.title)">
       <iconify-icon :icon="link.icon"></iconify-icon>
       <span class="hidden lg:block text-nowrap">{{ link.title }}</span>
     </div>
