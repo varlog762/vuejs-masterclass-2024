@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { set } from '@vueuse/core/index.cjs'
-import { supabase } from './lib/supabase-client'
-
 const errorStore = useErrorStore()
 
 onErrorCaptured((error) => {
@@ -9,11 +6,7 @@ onErrorCaptured((error) => {
 })
 
 onMounted(() => {
-  supabase.auth.onAuthStateChange((event, session) => {
-    setTimeout(() => {
-      useAuthStore().setAuth(session)
-    }, 0)
-  })
+  useAuthStore().trackAuthChanges()
 })
 </script>
 
