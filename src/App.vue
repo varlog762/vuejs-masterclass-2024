@@ -1,11 +1,20 @@
 <script setup lang="ts">
+import { set } from '@vueuse/core/index.cjs'
+import { supabase } from './lib/supabase-client'
+
 const errorStore = useErrorStore()
 
 onErrorCaptured((error) => {
   errorStore.setError({ error, customCode: 500 })
 })
 
-onMounted(async () => {})
+onMounted(() => {
+  supabase.auth.onAuthStateChange((event, session) => {
+    setTimeout(() => {
+      useAuthStore().setAuth(session)
+    }, 0)
+  })
+})
 </script>
 
 <template>
