@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { login } from '@/utils/supaAuth'
 
-const { serverError, handleServerError } = useFormErrors()
+const { serverError, handleServerError, realtimeErrors, handleLoginForm } = useFormErrors()
 
 const router = useRouter()
 
@@ -40,8 +40,14 @@ const signin = async () => {
               type="email"
               placeholder="johndoe19@example.com"
               required
-              :class="{ 'border-red-500': serverError }"
+              :class="{ 'border-red-500': serverError || realtimeErrors?.email }"
+              @change="handleLoginForm(formData)"
             />
+            <ul class="text-sm text-left text-red-500" v-if="realtimeErrors?.email.length">
+              <li class="list-disc" v-for="error in realtimeErrors.email" :key="error">
+                {{ error }}
+              </li>
+            </ul>
           </div>
           <div class="grid gap-2">
             <div class="flex items-center">
@@ -56,6 +62,11 @@ const signin = async () => {
               required
               :class="{ 'border-red-500': serverError }"
             />
+            <ul class="text-sm text-left text-red-500" v-if="realtimeErrors?.password.length">
+              <li class="list-disc" v-for="error in realtimeErrors.password" :key="error">
+                {{ error }}
+              </li>
+            </ul>
           </div>
           <ul class="text-sm text-left text-red-500" v-if="serverError">
             <li class="list-disc">{{ serverError }}</li>
