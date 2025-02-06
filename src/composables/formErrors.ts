@@ -1,4 +1,4 @@
-import type { LoginFormInputInterface } from '@/types'
+import type { LoginFormInputInterface, FormErrorsType } from '@/types'
 import type { AuthError } from '@supabase/supabase-js'
 
 /**
@@ -15,7 +15,7 @@ import type { AuthError } from '@supabase/supabase-js'
  */
 export const useFormErrors = () => {
   const serverError = ref<string>('')
-  const realtimeErrors = ref()
+  const realtimeErrors = ref<FormErrorsType<LoginFormInputInterface>>()
 
   /**
    * Handles server errors by setting the serverError state variable to the error
