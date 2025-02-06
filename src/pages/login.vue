@@ -49,7 +49,7 @@ const signin = async () => {
               type="email"
               placeholder="johndoe19@example.com"
               required
-              :class="{ 'border-red-500': serverError || realtimeErrors?.email }"
+              :class="{ 'border-red-500': serverError || realtimeErrors?.email.length }"
             />
             <ul class="text-sm text-left text-red-500" v-if="realtimeErrors?.email.length">
               <li class="list-disc" v-for="error in realtimeErrors.email" :key="error">
@@ -68,7 +68,7 @@ const signin = async () => {
               type="password"
               autocomplete
               required
-              :class="{ 'border-red-500': serverError }"
+              :class="{ 'border-red-500': serverError || realtimeErrors?.password.length }"
             />
             <ul class="text-sm text-left text-red-500" v-if="realtimeErrors?.password.length">
               <li class="list-disc" v-for="error in realtimeErrors.password" :key="error">
