@@ -72,6 +72,6 @@ export type Task = QueryData<ReturnType<typeof taskQuery>>
  * @param id - The id of the profile to fetch
  * @returns A single profile object with the given id, or null if no profile exists
  */
-export const profileQuery = (id: string) => {
-  return supabase.from('profiles').select().eq('id', id).single()
+export const profileQuery = ({ column, value }: { column: string; value: string }) => {
+  return supabase.from('profiles').select().eq(column, value).single()
 }
